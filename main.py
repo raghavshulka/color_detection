@@ -3,8 +3,9 @@ from PIL import Image
 
 from util import get_limits
 
+# using BGR color 
+yellow = [0, 255, 255]  
 
-yellow = [0, 255, 255]  # yellow in BGR colorspace
 cap = cv2.VideoCapture(0)
 while True:
     ret, frame = cap.read()
@@ -23,6 +24,10 @@ while True:
         x1, y1, x2, y2 = bbox
 
         frame = cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5)
+        
+        # Calculate area of bounding box
+        area = (x2 - x1) * (y2 - y1)
+        cv2.putText(frame, f'Area: {area}', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
 
     cv2.imshow('frame', frame)
 
